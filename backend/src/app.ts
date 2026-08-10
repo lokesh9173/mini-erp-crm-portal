@@ -11,8 +11,13 @@ dotenv.config();
 const app = express();
 const port = process.env.PORT || 5000;
 
+const rawFrontendUrl = process.env.FRONTEND_URL || '';
+const frontendUrl = rawFrontendUrl.endsWith('/')
+  ? rawFrontendUrl.slice(0, -1)
+  : rawFrontendUrl;
+
 const allowedOrigins = process.env.NODE_ENV === 'production'
-  ? (process.env.FRONTEND_URL ? [process.env.FRONTEND_URL] : [])
+  ? (frontendUrl ? [frontendUrl] : [])
   : ['http://localhost:5173'];
 
 app.use(cors({
